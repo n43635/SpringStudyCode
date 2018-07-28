@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+    bean的配置:
+        id:     自定义,但不能与其他bean重名,IOC调用的时候会用到
+        class:  bean的包路径全名,Spring会通过反射机制对bean进行实例化
+    -->
+    <bean id="helloWorld" class="com.sx.f2spring.service.IOC_HelloWorld">
+
+        <!--通过property来给bean的属性进行赋值-->
+        <property name="HELLOWORLD" value="hello world"></property>
+    </bean>
+
+    <!--
+        init-method:    bean被初始化时指定bean中调用的方法
+        destroy-method: bean被销毁  时指定bean中调用的方法
+    -->
+    <bean id="beanlife" class="com.sx.f2spring.service.Beanlife" init-method="init" destroy-method="destory">
+        <property name="name" value="name属性被调用了"></property>
+    </bean>
+
+    <!--配置bean的后置处理器-->
+    <bean id="beanPostProcessor" class="com.sx.f2spring.service.MyBeanPostProcessor"></bean>
+
+    <!--
+    静态工厂代理
+    这里IOC并不会创建StaticFactory实例,而是返回factory-method指定方法中返回的对象的实例
+    -->
+    <bean id="staticFactory" class="com.sx.f2spring.service.StaticFactory" factory-method="getBook">
+        <!--配置factory-method指定需要传入的参数-->
+        <constructor-arg value="book1"/>
+    </bean>
+
+    <!--实例工厂方式-->
+    <!--在IOC内需要先创建实例工厂对象-->
+    <bean id="instanceFactory" class="com.sx.f2spring.service.InstanceFactory"></bean>
+    <!---->
+    <bean id="book3" class="com.sx.f2spring.bean.Book" factory-bean="instanceFactory" factory-method="getBook">
+        <constructor-arg value="book3"/>
+    </bean>
+
+</beans>
