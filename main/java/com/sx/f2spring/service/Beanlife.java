@@ -1,7 +1,9 @@
 package com.sx.f2spring.service;
 
 /**
- * ioc的声明周期
+ * IOC的生命周期练习
+ *
+ *
  */
 public class Beanlife {
 
